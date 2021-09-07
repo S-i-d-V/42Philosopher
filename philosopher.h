@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/07 19:03:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/07 19:38:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,26 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct s_parse
+typedef struct s_rules
 {
 	int	nb_philo;
 	int	death_timer;
 	int	eat_timer;
 	int	sleep_timer;
 	int	nb_eat;
-}				t_parse;
+}				t_rules;
+
+typedef struct s_philo
+{
+	int	eating;
+	int sleeping;
+	int thinking;
+}				t_philo;
 
 int		ft_atoi(const char *str);
 
 void	exit_error(int error);
 
-int		check_args(int ac, char **av, t_parse *parse);
+int		check_args(int ac, char **av, t_rules *rules);
 
 #endif
