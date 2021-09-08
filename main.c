@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/08 20:03:00 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/09 01:29:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	my_usleep(long int time)
 		usleep(10);
 }
 
+long int	ms_from_start(long int start)
+{
+	return (get_actual_time() - start);
+}
+
 t_rules	teach_rules(t_rules *rules)
 {
 	t_rules ret;
@@ -48,26 +53,40 @@ t_rules	teach_rules(t_rules *rules)
 void	*philo_func(void *data)
 {
 	t_philo	*philo;
-
 	philo = (t_philo *)data;
-	//
-	pthread_mutex_lock(&mutex);
-	fprintf(stderr, "%ld %d is doing things.\n", get_actual_time() - philo->rules.start, philo->num);
-	pthread_mutex_unlock(&mutex);
-	my_usleep(210);
-	//
-	pthread_mutex_lock(&mutex);
-	fprintf(stderr, "%ld %d is doing other things.\n", get_actual_time() - philo->rules.start, philo->num);
-	pthread_mutex_unlock(&mutex);
-	my_usleep(210);
-	//
-	pthread_mutex_lock(&mutex);
-	fprintf(stderr, "%ld %d is still doing other things.\n", get_actual_time() - philo->rules.start, philo->num);
-	pthread_mutex_unlock(&mutex);
-	my_usleep(210);
-	pthread_mutex_unlock(&mutex);
-	//
-	pthread_exit(NULL);
+	//Les nombre pair partent plus tard pour laisser leur fourchette aux autres
+	if (philo->num % 2 != 1)
+		my_usleep(25);
+	//fork - eat
+	if (philo->last_eat + philo->rules.eat_timer > philo->last_eat + philo->rules.death_timer)
+	{
+		//diying
+		my_usleep(philo->rules.death_timer);
+		fprintf(stderr, "%ld %d has \033[1;31mdied\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+		return (philo);
+	}
+	pthread_mutex_lock(&philo->lfork);
+	fprintf(stderr, "%ld %d has taken his \033[1;34mleft fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+	if (!philo->rfork)
+	{
+		//diying
+		my_usleep(philo->rules.death_timer);
+		fprintf(stderr, "%ld %d has \033[1;31mdied\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+		return (philo);
+	}
+	pthread_mutex_lock(philo->rfork);
+	fprintf(stderr, "%ld %d has taken his \033[1;32mright fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+	fprintf(stderr, "%ld %d is eating\n", ms_from_start(philo->rules.start), philo->num);
+	my_usleep(philo->rules.eat_timer);
+	philo->last_eat = ms_from_start(philo->rules.start);
+	pthread_mutex_unlock(&philo->lfork);
+	pthread_mutex_unlock(philo->rfork);
+	//sleep
+	fprintf(stderr, "%ld %d is sleeping\n", ms_from_start(philo->rules.start), philo->num);
+	my_usleep(philo->rules.sleep_timer);
+	//thinking
+	fprintf(stderr, "%ld %d is thinking\n", ms_from_start(philo->rules.start), philo->num);
+	return (philo);
 }
 
 t_philo	*init_philos(t_rules *rules)
@@ -84,9 +103,18 @@ t_philo	*init_philos(t_rules *rules)
 	{
 		philo[i].num = i + 1;
 		philo[i].rules = teach_rules(rules);
+		philo[i].last_eat = 0;
+		pthread_mutex_init(&philo[i].lfork, NULL);
+		if (i != rules->nb_philo - 1 && rules->nb_philo != 1)
+			philo[i].rfork = &philo[i + 1].lfork;
+		else if (rules->nb_philo != 1)
+			philo[i].rfork = &philo[0].lfork;
 		ret = pthread_create(&philo[i].thread, NULL, philo_func, &philo[i]);
 		if (ret != 0)
+		{
+			free(philo);
 			exit_error(-7);
+		}
 		i++;
 	}
 	i = 0;
@@ -97,8 +125,6 @@ t_philo	*init_philos(t_rules *rules)
 	}
 	return (philo);
 }
-
-#include <limits.h>
 
 int	main(int ac, char **av)
 {

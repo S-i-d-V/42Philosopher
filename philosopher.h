@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/08 19:58:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/08 23:09:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ typedef struct s_rules
 
 typedef struct s_philo
 {
-	int			num;
-	pthread_t	thread;
+	int				num;
+	pthread_t		thread;
+	pthread_mutex_t	lfork;
+	pthread_mutex_t	*rfork;
+	long int		last_eat;
 	t_rules		rules;
 }				t_philo;
 
