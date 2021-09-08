@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 18:57:29 by user42            #+#    #+#             */
-/*   Updated: 2021/09/07 19:43:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/08 19:58:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	check_args(int ac, char **av, t_rules *rules)
 	else
 		return (-2);
 	if (ft_atoi(av[2]) >= 0)
-		rules->death_timer = ft_atoi(av[2]);
+		rules->death_timer = ft_atoli(av[2]);
 	else
 		return (-3);
 	if (ft_atoi(av[3]) >= 0)
-		rules->eat_timer = ft_atoi(av[3]);
+		rules->eat_timer = ft_atoli(av[3]);
 	else
 		return (-4);
 	if (ft_atoi(av[4]) >= 0)
-		rules->sleep_timer = ft_atoi(av[4]);
+		rules->sleep_timer = ft_atoli(av[4]);
 	else
 		return (-5);
 	rules->nb_eat = -1;

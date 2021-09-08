@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 18:46:35 by user42            #+#    #+#             */
-/*   Updated: 2021/09/07 19:10:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/08 16:27:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	exit_error(int error)
 {
+	//PARSING
 	if (error == -1)
 	{
 		printf("[Erreur %d] Nombre d'arguments incorrect.\n", error);
@@ -29,5 +30,11 @@ void	exit_error(int error)
 		printf("[Erreur %d] Le temps pour dormir doit etre >= a 0.\n", error);
 	if (error == -6)
 		printf("[Erreur %d] Le nombre de repas doit etre >= a 0.\n", error);
+	//PTHREAD
+	if (error == -7)
+		printf("[Erreur %d] Pthread_create failed.\n", error);
+	//TIME
+	if (error == -8)
+		printf("[Erreur %d] Gettimeofday failed.\n", error);
 	exit(0);
 }
