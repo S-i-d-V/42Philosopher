@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/07 19:38:03 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/08 02:27:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ typedef struct s_rules
 
 typedef struct s_philo
 {
+	int	num;
 	int	eating;
-	int sleeping;
-	int thinking;
+	int	sleeping;
+	int	thinking;
+	t_rules	rules;
 }				t_philo;
 
 int		ft_atoi(const char *str);

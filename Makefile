@@ -16,8 +16,7 @@ RM = rm -rf
 UNAME = $(shell uname)
 
 #PROJECT
-EXEC = philo
-NAME = philo.a
+NAME = philo
 SRCS = ft_atoi.c error.c parsing.c
 INCLUDE = philosopher.h
 #OBJS
@@ -30,7 +29,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) main.c -o philo
+	@$(CC) $(FLAGS) $(OBJS) main.c -o $(NAME)
 
 clean:
 	@$(RM) $(OBJS)
