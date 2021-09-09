@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/09 19:14:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/10 01:48:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ typedef struct s_philo
 	pthread_mutex_t	*rfork;
 	long int		last_eat;
 	int				is_dead;
-	t_rules		rules;
+	int				finished;
+	t_rules			rules;
 }				t_philo;
 
 typedef struct s_checker
@@ -48,8 +49,6 @@ typedef struct s_checker
 
 int		ft_atoi(const char *str);
 int		ft_atoli(const char *str);
-
-void	exit_error(int error);
 
 int		check_args(int ac, char **av, t_rules *rules);
 

@@ -17,7 +17,7 @@ UNAME = $(shell uname)
 
 #PROJECT
 NAME = philo
-SRCS = ft_atoi.c error.c parsing.c
+SRCS = ft_atoi.c parsing.c
 INCLUDE = philosopher.h
 #OBJS
 OBJS = $(SRCS:.c=.o)
