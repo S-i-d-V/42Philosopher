@@ -17,7 +17,7 @@ UNAME = $(shell uname)
 
 #PROJECT
 NAME = philo
-SRCS = ft_atoi.c parsing.c
+SRCS = sources/ft_atoi.c sources/parsing.c sources/init_philo.c sources/time_tools.c sources/checker.c
 INCLUDE = philosopher.h
 #OBJS
 OBJS = $(SRCS:.c=.o)
@@ -30,11 +30,14 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@$(CC) $(FLAGS) $(OBJS) main.c -o $(NAME)
+	@echo "$(GREEN)$(NAME) compiled with success.$(CLEAR)"
 
 clean:
 	@$(RM) $(OBJS)
+	@echo "$(RED) object's files deleted with success.$(CLEAR)"
 
 fclean:	clean
 	@$(RM) $(NAME)
+	@echo "$(RED) $(NAME) deleted with success.$(CLEAR)"
 
 re: fclean all

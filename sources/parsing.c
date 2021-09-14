@@ -6,11 +6,11 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 18:57:29 by user42            #+#    #+#             */
-/*   Updated: 2021/09/08 19:58:08 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/14 18:56:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "../include/philosopher.h"
 
 int	check_args(int ac, char **av, t_rules *rules)
 {

@@ -6,11 +6,11 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:02:13 by user42            #+#    #+#             */
-/*   Updated: 2021/09/08 19:57:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/14 18:56:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosopher.h"
+#include "../include/philosopher.h"
 
 int	ft_atoli(const char *str)
 {

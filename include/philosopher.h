@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/10 01:48:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/14 18:30:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,19 @@ typedef struct s_checker
 	pthread_t		thread;
 }				t_checker;
 
-int		ft_atoi(const char *str);
-int		ft_atoli(const char *str);
+int			ft_atoi(const char *str);
+int			ft_atoli(const char *str);
 
-int		check_args(int ac, char **av, t_rules *rules);
+long int	get_actual_time();
+void		my_usleep(long int time);
+long int	ms_from_start(long int start);
+
+int			is_finished(t_checker *checker);
+void		*check_finish(void *data);
+
+t_checker	init_philos(t_rules *rules);
+t_rules		teach_rules(t_rules *rules);
+
+int			check_args(int ac, char **av, t_rules *rules);
 
 #endif
