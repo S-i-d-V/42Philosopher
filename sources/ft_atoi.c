@@ -6,13 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:02:13 by user42            #+#    #+#             */
-/*   Updated: 2021/09/14 18:56:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/15 13:03:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosopher.h"
 
-int	ft_atoli(const char *str)
+long int	ft_atoli(const char *str)
 {
 	int	i;
 	long int	nb;
