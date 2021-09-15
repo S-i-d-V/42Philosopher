@@ -6,11 +6,28 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 18:42:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/16 01:38:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philosopher.h"
+
+void	wait_action(t_philo *philo, long int time)
+{
+	long int start;
+
+	start = ms_from_start(philo->rules.start);
+	while (ms_from_start(philo->rules.start) < time + start)
+	{
+		if (ms_from_start(philo->rules.start) > philo->last_eat + philo->rules.death_timer)
+		{
+			printf("%ld %d has \033[1;31mdied\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+			philo->is_dead = 1;
+			exit(0);
+		}
+		usleep(1);
+	}
+}
 
 void	*philo_func(void *data)
 {
@@ -43,8 +60,8 @@ void	*philo_func(void *data)
 			printf("%ld %d is \033[1;33meating\033[00m (%d/%d) last_eat : %ld\n", ms_from_start(philo->rules.start), philo->num, philo->finished, philo->rules.nb_eat, philo->last_eat);
 			pthread_mutex_unlock(philo->rules.write);
 			philo->last_eat = ms_from_start(philo->rules.start);
-			//wait_action(philo, philo->rules.eat_timer);
-			my_usleep(philo->rules.eat_timer);
+			//my_usleep(philo->rules.eat_timer);
+			wait_action(philo, philo->rules.eat_timer);
 			//FORK
 			pthread_mutex_lock(philo->rules.write);
 			printf("%ld %d has \033[1;31mdroped\033[00m his \033[1;34mleft fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
@@ -53,17 +70,17 @@ void	*philo_func(void *data)
 			else
 				printf("%ld %d has \033[1;31mdroped\033[00m his \033[1;32mright fork\033[00m (%d's fork);\n", ms_from_start(philo->rules.start), philo->num, 1);
 			pthread_mutex_unlock(philo->rules.write);
-			pthread_mutex_unlock(&philo->lfork);
 			pthread_mutex_unlock(philo->rfork);
+			pthread_mutex_unlock(&philo->lfork);
 		}
 		else
-			//wait_action(philo, philo->rules.death_timer + 1000);
-			my_usleep(philo->rules.death_timer + 10);
+			//my_usleep(philo->rules.death_timer + 100);
+			wait_action(philo, philo->rules.death_timer + 100);
 		//SLEEP
 		pthread_mutex_lock(philo->rules.write);
 		printf("%ld %d is \033[1;37msleeping\033[00m\n", ms_from_start(philo->rules.start), philo->num);
-		//wait_action(philo, philo->rules.sleep_timer);
-		my_usleep(philo->rules.sleep_timer);
+		//my_usleep(philo->rules.sleep_timer);
+		wait_action(philo, philo->rules.sleep_timer);
 		pthread_mutex_unlock(philo->rules.write);
 		//THINK
 		pthread_mutex_lock(philo->rules.write);
