@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 01:20:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 01:37:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 
 typedef struct s_rules
 {
-	long int	start;
-	int			nb_philo;
-	long int			death_timer;
-	long int			eat_timer;
-	long int			sleep_timer;
-	int			nb_eat;
+	long int		start;
+	int				nb_philo;
+	long int		death_timer;
+	long int		eat_timer;
+	long int		sleep_timer;
+	int				nb_eat;
 	pthread_mutex_t	*write;
 }				t_rules;
 
@@ -44,7 +44,7 @@ typedef struct s_philo
 
 typedef struct s_checker
 {
-	t_philo 		*philo;
+	t_philo			*philo;
 	pthread_mutex_t	write;
 	pthread_t		thread;
 }				t_checker;
@@ -52,7 +52,7 @@ typedef struct s_checker
 int			ft_atoi(const char *str);
 long int	ft_atoli(const char *str);
 
-long int	get_actual_time();
+long int	get_actual_time(void);
 void		my_usleep(long int time);
 long int	ms_from_start(long int start);
 

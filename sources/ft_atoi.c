@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:02:13 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 13:03:44 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 01:40:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 long int	ft_atoli(const char *str)
 {
-	int	i;
+	int			i;
 	long int	nb;
-	int	nbsigne;
+	int			nbsigne;
 
 	i = 0;
 	nb = 0;
