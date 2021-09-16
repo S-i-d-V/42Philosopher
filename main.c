@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/16 01:38:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 01:21:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,50 +41,36 @@ void	*philo_func(void *data)
 		//FORK
 		pthread_mutex_lock(&philo->lfork);
 		pthread_mutex_lock(philo->rules.write);
-		printf("%ld %d has taken his \033[1;34mleft fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+		printf("\033[1;34m%ld %d has taken a fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
 		pthread_mutex_unlock(philo->rules.write);
 		if (philo->rules.nb_philo != 1)
 		{
 			//FORK
 			pthread_mutex_lock(philo->rfork);
 			pthread_mutex_lock(philo->rules.write);
-			if (philo->num != philo->rules.nb_philo)
-				printf("%ld %d has taken his \033[1;32mright fork\033[00m (%d's fork);\n", ms_from_start(philo->rules.start), philo->num, philo->num + 1);
-			else
-				printf("%ld %d has taken his \033[1;32mright fork\033[00m (%d's fork);\n", ms_from_start(philo->rules.start), philo->num, 1);
+			printf("\033[1;34m%ld %d has taken a fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
 			pthread_mutex_unlock(philo->rules.write);
 			//EAT
 			if (philo->rules.nb_eat != -1)
 				philo->finished++;
 			pthread_mutex_lock(philo->rules.write);
-			printf("%ld %d is \033[1;33meating\033[00m (%d/%d) last_eat : %ld\n", ms_from_start(philo->rules.start), philo->num, philo->finished, philo->rules.nb_eat, philo->last_eat);
+			printf("\033[1;32m%ld %d is eating\033[00m (%d/%d) last_eat : %ld\n", ms_from_start(philo->rules.start), philo->num, philo->finished, philo->rules.nb_eat, philo->last_eat);
 			pthread_mutex_unlock(philo->rules.write);
 			philo->last_eat = ms_from_start(philo->rules.start);
-			//my_usleep(philo->rules.eat_timer);
-			wait_action(philo, philo->rules.eat_timer);
-			//FORK
-			pthread_mutex_lock(philo->rules.write);
-			printf("%ld %d has \033[1;31mdroped\033[00m his \033[1;34mleft fork\033[00m\n", ms_from_start(philo->rules.start), philo->num);
-			if (philo->num != philo->rules.nb_philo)
-				printf("%ld %d has \033[1;31mdroped\033[00m his \033[1;32mright fork\033[00m (%d's fork);\n", ms_from_start(philo->rules.start), philo->num, philo->num + 1);
-			else
-				printf("%ld %d has \033[1;31mdroped\033[00m his \033[1;32mright fork\033[00m (%d's fork);\n", ms_from_start(philo->rules.start), philo->num, 1);
-			pthread_mutex_unlock(philo->rules.write);
+			my_usleep(philo->rules.eat_timer);
 			pthread_mutex_unlock(philo->rfork);
 			pthread_mutex_unlock(&philo->lfork);
 		}
 		else
-			//my_usleep(philo->rules.death_timer + 100);
-			wait_action(philo, philo->rules.death_timer + 100);
+			my_usleep(philo->rules.death_timer + 100);
 		//SLEEP
 		pthread_mutex_lock(philo->rules.write);
-		printf("%ld %d is \033[1;37msleeping\033[00m\n", ms_from_start(philo->rules.start), philo->num);
-		//my_usleep(philo->rules.sleep_timer);
-		wait_action(philo, philo->rules.sleep_timer);
+		printf("\033[1;33m%ld %d is sleeping\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+		my_usleep(philo->rules.sleep_timer);
 		pthread_mutex_unlock(philo->rules.write);
 		//THINK
 		pthread_mutex_lock(philo->rules.write);
-		printf("%ld %d is \033[1;35mthinking\033[00m\n", ms_from_start(philo->rules.start), philo->num);
+		printf("\033[1;39m%ld %d is thinking\033[00m\n", ms_from_start(philo->rules.start), philo->num);
 		pthread_mutex_unlock(philo->rules.write);
 	}
 	return (philo);
@@ -95,7 +81,6 @@ void	start_thread(t_checker *checker)
 	int i;
 
 	i = 0;
-	pthread_create(&checker->thread, NULL, check_finish, &checker);
 	while (i < checker->philo->rules.nb_philo)
 	{
 		pthread_create(&checker->philo[i].thread, NULL, philo_func, &checker->philo[i]);

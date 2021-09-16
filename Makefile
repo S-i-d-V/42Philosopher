@@ -17,7 +17,7 @@ UNAME = $(shell uname)
 
 #PROJECT
 NAME = philo
-SRCS = sources/ft_atoi.c sources/parsing.c sources/init_philo.c sources/time_tools.c sources/checker.c
+SRCS = sources/ft_atoi.c sources/parsing.c sources/init_philo.c sources/time_tools.c
 INCLUDE = philosopher.h
 #OBJS
 OBJS = $(SRCS:.c=.o)

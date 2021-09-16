@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/15 17:09:42 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 01:20:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ long int	ft_atoli(const char *str);
 long int	get_actual_time();
 void		my_usleep(long int time);
 long int	ms_from_start(long int start);
-
-int			is_finished(t_checker *checker);
-void		*check_finish(void *data);
 
 t_checker	init_philos(t_rules *rules);
 t_rules		teach_rules(t_checker checker, t_rules *rules);
