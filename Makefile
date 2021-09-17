@@ -29,7 +29,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) $(OBJS) main.c -o $(NAME)
+	@$(CC) $(FLAGS) -g -fsanitize=address $(OBJS) main.c -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled with success.$(CLEAR)"
 
 clean:
