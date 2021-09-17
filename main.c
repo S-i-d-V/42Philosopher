@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 17:04:47 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/09/17 19:20:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,32 @@ void	write_action(t_philo *philo, char *msg)
 	pthread_mutex_unlock(philo->rules.write);
 }
 
+void	*check_func(void *data)
+{
+	t_philo	*philo;
+	int i;
+	int finish;
+
+	philo = (t_philo *)data;
+	i = 0;
+	finish = 0;
+	while (1)
+	{
+		if (ms_from_start(philo->rules.start) > philo->last_eat + philo->rules.death_timer)
+		{
+			philo->is_dead = 1;
+			write_action(philo, "\033[1;31mhas died\033[00m");
+			exit(0);
+		}
+		if (philo->finished >= philo->rules.nb_eat && philo->rules.nb_eat != -1)
+			finish++;
+		i++;
+	}
+	if (finish == philo->rules.nb_philo)
+		exit(0);
+	return (NULL);
+}
+
 void	*philo_func(void *data)
 {
 	t_philo	*philo;
@@ -26,71 +52,30 @@ void	*philo_func(void *data)
 	philo = (t_philo *)data;
 	if (philo->num % 2 != 1)
 		my_usleep(50);
+	pthread_create(&philo->check, NULL, check_func, &philo);
 	while (1)
 	{
-		if (philo->is_dead == 0)
+		pthread_mutex_lock(&philo->lfork);
+		write_action(philo, "\033[1;34mhas taken a fork\033[00m");
+		if (philo->rules.nb_philo != 1)
 		{
-			pthread_mutex_lock(&philo->lfork);
+			pthread_mutex_lock(philo->rfork);
 			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
-			if (philo->rules.nb_philo != 1)
-			{
-				pthread_mutex_lock(philo->rfork);
-				write_action(philo, "\033[1;34mhas taken a fork\033[00m");
-				if (philo->rules.nb_eat != -1)
-					philo->finished++;
-				write_action(philo, "\033[1;32mis eating\033[00m");
-				philo->last_eat = ms_from_start(philo->rules.start);
-				my_usleep(philo->rules.eat_timer);
-				pthread_mutex_unlock(philo->rfork);
-				pthread_mutex_unlock(&philo->lfork);
-			}
-			else
-				my_usleep(philo->rules.death_timer + 100);
+			if (philo->rules.nb_eat != -1)
+				philo->finished++;
+			write_action(philo, "\033[1;32mis eating\033[00m");
+			philo->last_eat = ms_from_start(philo->rules.start);
+			my_usleep(philo->rules.eat_timer);
+			pthread_mutex_unlock(philo->rfork);
+			pthread_mutex_unlock(&philo->lfork);
 		}
-		if (philo->is_dead == 0)
-		{
-			write_action(philo, "\033[1;33mis sleeping\033[00m");
-			my_usleep(philo->rules.sleep_timer);
-		}
-		if (philo->is_dead == 0)
-			write_action(philo, "\033[1;39mis thinking\033[00m");
+		else
+			my_usleep(philo->rules.death_timer + 100);
+		write_action(philo, "\033[1;33mis sleeping\033[00m");
+		my_usleep(philo->rules.sleep_timer);
+		write_action(philo, "\033[1;39mis thinking\033[00m");
 	}
 	return (philo);
-}
-
-void	kill_philos(t_checker *checker)
-{
-	int i;
-
-	i = 0;
-	while (i < checker->philo[0].rules.nb_philo)
-	{
-		checker->philo[i].is_dead = 1;
-		i++;
-	}
-}
-
-void	check_end(t_checker *checker)
-{
-	int i;
-	int finish;
-
-	i = 0;
-	finish = 0;
-	while (i < checker->philo[0].rules.nb_philo)
-	{
-		if (ms_from_start(checker->philo[0].rules.start) > checker->philo[i].last_eat + checker->philo[0].rules.death_timer)
-		{
-			kill_philos(checker);
-			write_action(&checker->philo[i], "\033[1;31mhas died\033[00m");
-			exit(0);
-		}
-		if (checker->philo[i].finished >= checker->philo[0].rules.nb_eat && checker->philo[0].rules.nb_eat != -1)
-			finish++;
-		i++;
-	}
-	if (finish == checker->philo[0].rules.nb_philo)
-		exit(0);
 }
 
 void	start_thread(t_checker *checker)
@@ -104,8 +89,12 @@ void	start_thread(t_checker *checker)
 			NULL, philo_func, &checker->philo[i]);
 		i++;
 	}
-	while (1)
-		check_end(checker);
+	i = 0;
+	while (i < checker->philo->rules.nb_philo)
+	{
+		pthread_join(checker->philo[i].thread, NULL);
+		i++;
+	}
 }
 
 int	main(int ac, char **av)
