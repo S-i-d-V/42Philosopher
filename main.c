@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 01:37:07 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 15:53:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*philo_func(void *data)
 	philo = (t_philo *)data;
 	if (philo->num % 2 != 1)
 		my_usleep(50);
-	while (philo->finished < philo->rules.nb_eat || philo->rules.nb_eat == -1)
+	while (1)
 	{
 		pthread_mutex_lock(&philo->lfork);
 		write_action(philo, "\033[1;34mhas taken a fork\033[00m");
@@ -51,6 +51,28 @@ void	*philo_func(void *data)
 	return (philo);
 }
 
+void	check_end(t_checker *checker)
+{
+	int i;
+	int finish;
+
+	i = 0;
+	finish = 0;
+	while (i < checker->philo[0].rules.nb_philo)
+	{
+		if (ms_from_start(checker->philo[0].rules.start) > checker->philo[i].last_eat + checker->philo[0].rules.death_timer)
+		{
+			write_action(&checker->philo[i], "\033[1;31mhas died\033[00m");
+			exit(0);
+		}
+		if (checker->philo[i].finished >= checker->philo[0].rules.nb_eat && checker->philo[0].rules.nb_eat != -1)
+			finish++;
+		i++;
+	}
+	if (finish == checker->philo[0].rules.nb_philo)
+		exit(0);
+}
+
 void	start_thread(t_checker *checker)
 {
 	int	i;
@@ -62,12 +84,8 @@ void	start_thread(t_checker *checker)
 			NULL, philo_func, &checker->philo[i]);
 		i++;
 	}
-	i = 0;
-	while (i < checker->philo->rules.nb_philo)
-	{
-		pthread_join(checker->philo[i].thread, NULL);
-		i++;
-	}
+	while (1)
+		check_end(checker);
 }
 
 int	main(int ac, char **av)

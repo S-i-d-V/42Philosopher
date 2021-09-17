@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:26:33 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 01:40:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/17 16:02:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ t_checker	init_philos(t_rules *rules)
 		else
 			checker.philo[i].finished = 0;
 		pthread_mutex_init(&checker.philo[i].lfork, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < rules->nb_philo)
+	{
 		if (i != rules->nb_philo - 1 && rules->nb_philo != 1)
 			checker.philo[i].rfork = &checker.philo[i + 1].lfork;
 		else if (rules->nb_philo != 1)
