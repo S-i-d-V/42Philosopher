@@ -6,7 +6,7 @@
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 21:13:00 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/09/17 22:50:36 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	*philo_func(void *data)
 	philo = (t_philo *)data;
 	if (philo->num % 2 != 1)
 		my_usleep(50);
-	pthread_create(&philo->check, NULL, check_func, philo);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->lfork);
@@ -92,7 +91,7 @@ void	check_end(t_checker *checker)
 			finish++;
 		i++;
 	}
-	if (finish == checker->philo[0].rules.nb_philo)
+	if (finish == checker->philo[0].rules.nb_philo && checker->philo[0].rules.nb_eat != -1)
 		exit(0);
 }
 
@@ -103,8 +102,8 @@ void	start_thread(t_checker *checker)
 	i = 0;
 	while (i < checker->philo->rules.nb_philo)
 	{
-		pthread_create(&checker->philo[i].thread,
-			NULL, philo_func, &checker->philo[i]);
+		pthread_create(&checker->philo[i].thread, NULL, philo_func, &checker->philo[i]);
+		pthread_create(&checker->philo[i].check, NULL, check_func, &checker->philo[i]);
 		i++;
 	}
 	i = 0;
