@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 22:50:36 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/09/20 16:54:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	*philo_func(void *data)
 	{
 		pthread_mutex_lock(&philo->lfork);
 		write_action(philo, "\033[1;34mhas taken a fork\033[00m");
-		if (philo->rules.nb_philo != 1)
-		{
+		//if (philo->rules.nb_philo != 1)
+		//{
 			pthread_mutex_lock(philo->rfork);
 			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
 			if (philo->rules.nb_eat != -1)
@@ -66,9 +66,9 @@ void	*philo_func(void *data)
 			my_usleep(philo->rules.eat_timer);
 			pthread_mutex_unlock(philo->rfork);
 			pthread_mutex_unlock(&philo->lfork);
-		}
-		else
-			my_usleep(philo->rules.death_timer + 100);
+		//}
+		//else
+		//	my_usleep(philo->rules.death_timer + 100);
 		write_action(philo, "\033[1;33mis sleeping\033[00m");
 		my_usleep(philo->rules.sleep_timer);
 		write_action(philo, "\033[1;39mis thinking\033[00m");
@@ -103,10 +103,14 @@ void	start_thread(t_checker *checker)
 	while (i < checker->philo->rules.nb_philo)
 	{
 		pthread_create(&checker->philo[i].thread, NULL, philo_func, &checker->philo[i]);
-		pthread_create(&checker->philo[i].check, NULL, check_func, &checker->philo[i]);
 		i++;
 	}
 	i = 0;
+	while (i < checker->philo->rules.nb_philo)
+	{
+		pthread_create(&checker->philo[i].check, NULL, check_func, &checker->philo[i]);
+		i++;
+	}
 	while (1)
 		check_end(checker);
 }
