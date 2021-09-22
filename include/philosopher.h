@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/22 17:52:15 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/22 18:07:34 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_rules
 	int				nb_eat;
 	pthread_mutex_t	*write;
 	pthread_mutex_t	*die;
+	pthread_mutex_t	*eat;
 }				t_rules;
 
 typedef struct s_philo
@@ -49,6 +50,7 @@ typedef struct s_checker
 	t_philo			*philo;
 	pthread_mutex_t	write;
 	pthread_mutex_t	die;
+	pthread_mutex_t	eat;
 	pthread_t		thread;
 }				t_checker;
 
