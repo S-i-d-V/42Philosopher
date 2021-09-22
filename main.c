@@ -6,7 +6,7 @@
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/22 18:10:20 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/09/22 23:55:31 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ void	*philo_func(void *data)
 		{
 			pthread_mutex_lock(philo->rfork);
 			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
+			//pthread_mutex_lock(philo->rules.finish);
 			if (philo->rules.nb_eat != -1)
 				philo->finished++;
+			//pthread_mutex_unlock(philo->rules.finish);
 			write_action(philo, "\033[1;32mis eating\033[00m");
 			pthread_mutex_lock(philo->rules.eat);
 			philo->last_eat = ms_from_start(philo->rules.start);
@@ -94,10 +96,13 @@ void	check_end(t_checker *checker)
 		if (checker->philo[i].is_dead == 1)
 			exit(0);
 		pthread_mutex_unlock(checker->philo[i].rules.die);
+		//pthread_mutex_lock(checker->philo[i].rules.finish);
 		if (checker->philo[i].finished >= checker->philo[0].rules.nb_eat && checker->philo[0].rules.nb_philo != -1)
 			finish++;
+		//pthread_mutex_unlock(checker->philo[i].rules.finish);
 		i++;
 	}
+	//pthread_mutex_lock(checker->philo[i].rules.finish);
 	if (finish == checker->philo[0].rules.nb_philo && checker->philo[0].rules.nb_eat != -1)
 		exit(0);
 }
