@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:26:33 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 21:13:11 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/09/22 17:52:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ t_checker	init_philos(t_rules *rules)
 	i = 0;
 	checker.philo = malloc(sizeof(t_philo) * (rules->nb_philo));
 	pthread_mutex_init(&checker.write, NULL);
+	pthread_mutex_init(&checker.die, NULL);
 	while (i < rules->nb_philo)
 	{
 		checker.philo[i].num = i + 1;
 		checker.philo[i].rules = teach_rules(rules);
 		checker.philo[i].rules.write = &checker.write;
+		checker.philo[i].rules.die = &checker.die;
 		checker.philo[i].last_eat = 0;
 		checker.philo[i].is_dead = 0;
 		if (checker.philo[i].rules.nb_eat == -1)

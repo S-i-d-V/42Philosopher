@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/20 16:54:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/22 17:53:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	*check_func(void *data)
 	{
 		if (ms_from_start(philo->rules.start) > philo->last_eat + philo->rules.death_timer)
 		{
+			pthread_mutex_lock(philo->rules.die);
 			philo->is_dead = 1;
+			pthread_mutex_unlock(philo->rules.die);
 			write_death(philo);
 			exit(0);
 		}
@@ -85,8 +87,10 @@ void	check_end(t_checker *checker)
 	finish = 0;
 	while (i < checker->philo[0].rules.nb_philo)
 	{
+		pthread_mutex_lock(checker->philo[i].rules.die);
 		if (checker->philo[i].is_dead == 1)
 			exit(0);
+		pthread_mutex_unlock(checker->philo[i].rules.die);
 		if (checker->philo[i].finished >= checker->philo[0].rules.nb_eat && checker->philo[0].rules.nb_philo != -1)
 			finish++;
 		i++;

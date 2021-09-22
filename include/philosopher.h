@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 21:13:00 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/09/22 17:52:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_rules
 	long int		sleep_timer;
 	int				nb_eat;
 	pthread_mutex_t	*write;
+	pthread_mutex_t	*die;
 }				t_rules;
 
 typedef struct s_philo
@@ -47,6 +48,7 @@ typedef struct s_checker
 {
 	t_philo			*philo;
 	pthread_mutex_t	write;
+	pthread_mutex_t	die;
 	pthread_t		thread;
 }				t_checker;
 
