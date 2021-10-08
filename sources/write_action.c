@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:50:35 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/08 20:25:09 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 20:36:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	philo_sleep_think(t_philo *philo)
 void	write_death(t_philo *philo)
 {
 	pthread_mutex_lock(philo->rules->write);
-	printf("%ld %d \033[1;31mhas died\033[00m\n", ms_from_start(philo->rules->start), philo->num);
+	printf("%ld %d \033[1;31mhas died\033[00m\n",
+		ms_from_start(philo->rules->start), philo->num);
 	my_usleep(25);
 }
 

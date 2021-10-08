@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 19:39:59 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 20:37:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@ void		start_thread(t_checker *checker);
 void		*philo_day(void *data);
 void		philo_got_one_fork(t_philo *philo);
 void		*check_philo(void *data);
+
 void		check_end(t_checker *checker);
+void		check_eat(t_checker *checker);
 
 void		exit_properly(t_checker *checker);
 
