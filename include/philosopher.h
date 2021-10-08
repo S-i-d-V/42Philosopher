@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 13:33:17 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 13:55:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct s_rules
 	pthread_mutex_t	*write;
 	pthread_mutex_t	*die;
 	pthread_mutex_t	*eat;
-	//pthread_mutex_t	*finish;
-	
 }				t_rules;
 
 typedef struct s_philo
@@ -53,7 +51,6 @@ typedef struct s_checker
 	pthread_mutex_t	write;
 	pthread_mutex_t	die;
 	pthread_mutex_t	eat;
-	//pthread_mutex_t finish;
 }				t_checker;
 
 int			ft_atoi(const char *str);
