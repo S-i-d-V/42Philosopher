@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/09/22 18:10:20 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 12:48:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,31 @@ void	*philo_func(void *data)
 		my_usleep(50);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->lfork);
+		//eat
+		pthread_mutex_lock(philo->rfork);
 		write_action(philo, "\033[1;34mhas taken a fork\033[00m");
 		if (philo->rules.nb_philo != 1)
 		{
-			pthread_mutex_lock(philo->rfork);
+			pthread_mutex_lock(&philo->lfork);
 			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
-			if (philo->rules.nb_eat != -1)
-				philo->finished++;
 			write_action(philo, "\033[1;32mis eating\033[00m");
 			pthread_mutex_lock(philo->rules.eat);
 			philo->last_eat = ms_from_start(philo->rules.start);
 			pthread_mutex_unlock(philo->rules.eat);
+			if (philo->rules.nb_eat != -1)
+				philo->finished++;
 			my_usleep(philo->rules.eat_timer);
 			pthread_mutex_unlock(philo->rfork);
 			pthread_mutex_unlock(&philo->lfork);
 		}
 		else
 			my_usleep(philo->rules.death_timer + 100);
+		//think/sleep
 		write_action(philo, "\033[1;33mis sleeping\033[00m");
 		my_usleep(philo->rules.sleep_timer);
 		write_action(philo, "\033[1;39mis thinking\033[00m");
 	}
-	return (philo);
+	return (NULL);
 }
 
 void	check_end(t_checker *checker)
@@ -110,16 +112,34 @@ void	start_thread(t_checker *checker)
 	while (i < checker->philo->rules.nb_philo)
 	{
 		pthread_create(&checker->philo[i].thread, NULL, philo_func, &checker->philo[i]);
+		pthread_detach(checker->philo[i].thread);
 		i++;
 	}
 	i = 0;
 	while (i < checker->philo->rules.nb_philo)
 	{
 		pthread_create(&checker->philo[i].check, NULL, check_func, &checker->philo[i]);
+		pthread_detach(checker->philo[i].check);
 		i++;
 	}
 	while (1)
 		check_end(checker);
+}
+
+void	exit_properly(t_checker *checker)
+{
+	int i;
+
+	i = 0;
+	while (i < checker->philo->rules.nb_philo)
+	{
+		pthread_mutex_destroy(&checker->philo[i].lfork);
+		i++;
+	}
+	pthread_mutex_destroy(&checker->write);
+	pthread_mutex_destroy(&checker->die);
+	pthread_mutex_destroy(&checker->eat);
+	exit(0);
 }
 
 int	main(int ac, char **av)
@@ -134,5 +154,5 @@ int	main(int ac, char **av)
 	rules.start = get_actual_time();
 	checker = init_philos(&rules);
 	start_thread(&checker);
-	return (0);
+	//exit_properly(&checker);
 }
