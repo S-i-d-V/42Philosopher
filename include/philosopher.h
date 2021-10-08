@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 13:55:38 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/08 14:41:59 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_philo
 	long int		last_eat;
 	int				is_dead;
 	int				finished;
-	t_rules			rules;
+	t_rules			*rules;
 }				t_philo;
 
 typedef struct s_checker
@@ -60,7 +60,7 @@ long int	get_actual_time(void);
 void		my_usleep(long int time);
 long int	ms_from_start(long int start);
 
-t_checker	init_philos(t_rules *rules);
+void		init_philos(t_checker *checker, t_rules *rules);
 t_rules		teach_rules(t_rules *rules);
 
 int			check_args(int ac, char **av, t_rules *rules);

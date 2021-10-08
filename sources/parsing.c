@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 18:57:29 by user42            #+#    #+#             */
-/*   Updated: 2021/09/17 01:38:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/08 14:41:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int	check_args(int ac, char **av, t_rules *rules)
 		else
 			return (-6);
 	}
+	rules->start = get_actual_time();
 	return (0);
 }
