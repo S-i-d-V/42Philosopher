@@ -6,7 +6,7 @@
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 13:25:28 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 13:33:44 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,5 @@ int	main(int ac, char **av)
 	rules.start = get_actual_time();
 	checker = init_philos(&rules);
 	start_thread(&checker);
-	exit_properly(&checker);
+	//exit_properly(&checker);
 }
