@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_philo.c                                       :+:      :+:    :+:   */
+/*   init_simulation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:26:33 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 16:19:57 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 19:39:59 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	init_philos(t_checker *checker, t_rules *rules)
 		checker->philo[i].rules = rules;
 		checker->philo[i].last_eat = 0;
 		checker->philo[i].is_dead = 0;
+		checker->philo[i].is_satiated = 0;
+		checker->philo[i].finished = 0;
 		if (rules->nb_eat == -1)
 			checker->philo[i].finished = -1;
-		else
-			checker->philo[i].finished = 0;
 		pthread_mutex_init(&checker->philo[i].lfork, NULL);
 		i++;
 	}
