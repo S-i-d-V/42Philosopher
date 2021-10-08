@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 17:07:07 by ugotheveny       ###   ########.fr       */
+/*   Created: 2021/10/08 16:21:34 by ugotheveny        #+#    #+#             */
+/*   Updated: 2021/10/08 16:22:13 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/philosopher.h"
+#include "../include/philosopher.h"
 
-int	main(int ac, char **av)
+void	exit_properly(t_checker *checker)
 {
-	t_rules		rules;
-	t_checker	checker;
+	int i;
 
-	if (ac < 5 || ac > 6)
-		exit(0);
-	else if (check_args(ac, av, &rules) < 0)
-		exit(0);
-	checker.philo = malloc(sizeof(t_philo) * (rules.nb_philo));
-	init_simulation(&checker, &rules);
-	printf("PHILO : nb_eat = %d | finished = %d\n", rules.nb_eat, checker.philo[0].finished);
-	start_thread(&checker);
+	i = 0;
+	while (i < checker->philo->rules->nb_philo)
+	{
+		pthread_mutex_destroy(&checker->philo[i].lfork);
+		i++;
+	}
+	pthread_mutex_destroy(&checker->write);
+	pthread_mutex_destroy(&checker->die);
+	pthread_mutex_destroy(&checker->eat);
+	exit(0);
 }

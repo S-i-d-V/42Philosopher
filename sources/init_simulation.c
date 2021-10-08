@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:26:33 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 14:42:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/08 16:19:57 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosopher.h"
+
+void	init_simulation(t_checker *checker, t_rules *rules)
+{
+	pthread_mutex_init(&checker->write, NULL);
+	pthread_mutex_init(&checker->die, NULL);
+	pthread_mutex_init(&checker->eat, NULL);
+	pthread_mutex_init(&checker->finish, NULL);
+	rules->write = &checker->write;
+	rules->die = &checker->die;
+	rules->eat = &checker->eat;
+	rules->finish = &checker->finish;
+	init_philos(checker, rules);
+}
 
 t_rules	teach_rules(t_rules *rules)
 {
