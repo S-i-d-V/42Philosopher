@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 12:55:01 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/08 13:25:28 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	*philo_func(void *data)
 	while (1)
 	{
 		//eat
-		pthread_mutex_lock(philo->rfork);
-		write_action(philo, "\033[1;34mhas taken a fork\033[00m");
 		if (philo->rules.nb_philo != 1)
 		{
+			pthread_mutex_lock(philo->rfork);
+			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
 			pthread_mutex_lock(&philo->lfork);
 			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
 			write_action(philo, "\033[1;32mis eating\033[00m");
@@ -72,13 +72,18 @@ void	*philo_func(void *data)
 			my_usleep(philo->rules.eat_timer);
 			pthread_mutex_unlock(philo->rfork);
 			pthread_mutex_unlock(&philo->lfork);
+			//think/sleep
+			write_action(philo, "\033[1;33mis sleeping\033[00m");
+			my_usleep(philo->rules.sleep_timer);
+			write_action(philo, "\033[1;39mis thinking\033[00m");
 		}
 		else
+		{
+			pthread_mutex_lock(&philo->lfork);
+			write_action(philo, "\033[1;34mhas taken a fork\033[00m");
+			pthread_mutex_unlock(&philo->lfork);
 			my_usleep(philo->rules.death_timer + 100);
-		//think/sleep
-		write_action(philo, "\033[1;33mis sleeping\033[00m");
-		my_usleep(philo->rules.sleep_timer);
-		write_action(philo, "\033[1;39mis thinking\033[00m");
+		}
 	}
 	return (NULL);
 }
@@ -157,5 +162,5 @@ int	main(int ac, char **av)
 	rules.start = get_actual_time();
 	checker = init_philos(&rules);
 	start_thread(&checker);
-	//exit_properly(&checker);
+	exit_properly(&checker);
 }
