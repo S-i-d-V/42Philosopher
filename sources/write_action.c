@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:50:35 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/08 16:53:24 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 17:24:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ void	philo_die(t_philo *philo)
 	philo->is_dead = 1;
 	pthread_mutex_unlock(philo->rules->die);
 	write_death(philo);
-	exit(0);	
+	my_usleep(25);
 }

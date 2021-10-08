@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:21:34 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/08 16:22:13 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 17:21:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exit_properly(t_checker *checker)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < checker->philo->rules->nb_philo)
@@ -25,5 +25,6 @@ void	exit_properly(t_checker *checker)
 	pthread_mutex_destroy(&checker->write);
 	pthread_mutex_destroy(&checker->die);
 	pthread_mutex_destroy(&checker->eat);
+	pthread_mutex_destroy(&checker->finish);
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:50:32 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 17:07:07 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/08 17:13:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ int	main(int ac, char **av)
 		exit(0);
 	checker.philo = malloc(sizeof(t_philo) * (rules.nb_philo));
 	init_simulation(&checker, &rules);
-	printf("PHILO : nb_eat = %d | finished = %d\n", rules.nb_eat, checker.philo[0].finished);
 	start_thread(&checker);
 }
