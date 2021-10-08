@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:26:33 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 14:04:39 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/08 14:06:01 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_checker	init_philos(t_rules *rules)
 
 	i = 0;
 	checker.philo = malloc(sizeof(t_philo) * (rules->nb_philo));
-	pthread_mutex_init(&checker.write, NULL)
+	pthread_mutex_init(&checker.write, NULL);
 	pthread_mutex_init(&checker.die, NULL);
 	pthread_mutex_init(&checker.eat, NULL);
 	while (i < rules->nb_philo)
