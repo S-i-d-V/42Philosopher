@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_end.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:37:00 by user42            #+#    #+#             */
-/*   Updated: 2021/10/14 12:24:37 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/14 12:50:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	check_end(t_checker *checker)
 		if (checker->philo[0].rules->nb_eat != -1)
 			check_eat(checker);
 		pthread_mutex_lock(checker->philo[i].rules->eat);
-		if (ms_from_start(checker->philo[i].rules->start) > checker->philo[i].last_eat + checker->philo[i].rules->death_timer)
+		if (ms_from_start(checker->philo[i].rules->start)
+			> checker->philo[i].last_eat + checker->philo[i].rules->death_timer)
 		{
 			write_death(&checker->philo[i]);
 			exit_properly(checker);
