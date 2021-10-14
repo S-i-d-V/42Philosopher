@@ -6,7 +6,7 @@
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:57:48 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/14 12:23:38 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/14 12:40:03 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ void	start_thread(t_checker *checker)
 		i++;
 	}
 	while (1)
+	{
 		check_end(checker);
+		my_usleep(5);
+	}
 	exit_properly(checker);
 }
