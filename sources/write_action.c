@@ -6,7 +6,7 @@
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:50:35 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/08 20:42:53 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/14 12:11:30 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ void	philo_eat(t_philo *philo)
 	write_action(philo, "\033[1;32mis eating\033[00m");
 	pthread_mutex_lock(philo->rules->finish);
 	if (philo->rules->nb_eat != -1)
-	{
 		philo->finished++;
-		if (philo->finished == philo->rules->nb_eat)
-			philo->is_satiated = 1;
-	}
 	pthread_mutex_unlock(philo->rules->finish);
 	my_usleep(philo->rules->eat_timer);
 	philo_unlock_forks(philo);
@@ -53,14 +49,5 @@ void	write_death(t_philo *philo)
 	pthread_mutex_lock(philo->rules->write);
 	printf("%ld %d \033[1;31mhas died\033[00m\n",
 		ms_from_start(philo->rules->start), philo->num);
-	my_usleep(25);
-}
-
-void	philo_die(t_philo *philo)
-{
-	pthread_mutex_lock(philo->rules->die);
-	philo->is_dead = 1;
-	pthread_mutex_unlock(philo->rules->die);
-	write_death(philo);
 	my_usleep(25);
 }

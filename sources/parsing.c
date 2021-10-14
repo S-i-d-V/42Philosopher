@@ -6,7 +6,7 @@
 /*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 18:57:29 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 17:08:56 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/14 12:30:52 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	get_nb_eat(int ac, char **av, t_rules *rules)
 	if (ac == 6)
 	{
 		if (is_only_num(av[5]) == 1
-			&& ft_atoi(av[5]) >= 0 && ft_atoi(av[5]) <= 2147483647)
+			&& ft_atoi(av[5]) > 0 && ft_atoi(av[5]) <= 2147483647)
 			rules->nb_eat = ft_atoi(av[5]);
 		else
 			return (-6);

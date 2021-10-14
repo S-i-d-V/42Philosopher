@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   check_end.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:37:00 by user42            #+#    #+#             */
-/*   Updated: 2021/10/08 20:37:41 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/14 12:24:37 by ugotheveny       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_eat(t_checker *checker)
 		&& checker->philo[0].rules->nb_eat != -1)
 	{
 		pthread_mutex_lock(checker->philo[i].rules->finish);
-		if (checker->philo[i].is_satiated == 1)
+		if (checker->philo[i].finished >= checker->philo[i].rules->nb_eat)
 			finish++;
 		pthread_mutex_unlock(checker->philo[i].rules->finish);
 		i++;
@@ -43,11 +43,15 @@ void	check_end(t_checker *checker)
 	i = 0;
 	while (i < checker->philo[0].rules->nb_philo)
 	{
-		check_eat(checker);
-		pthread_mutex_lock(checker->philo[i].rules->die);
-		if (checker->philo[i].is_dead == 1)
+		if (checker->philo[0].rules->nb_eat != -1)
+			check_eat(checker);
+		pthread_mutex_lock(checker->philo[i].rules->eat);
+		if (ms_from_start(checker->philo[i].rules->start) > checker->philo[i].last_eat + checker->philo[i].rules->death_timer)
+		{
+			write_death(&checker->philo[i]);
 			exit_properly(checker);
-		pthread_mutex_unlock(checker->philo[i].rules->die);
+		}
+		pthread_mutex_unlock(checker->philo[i].rules->eat);
 		i++;
 	}
 }

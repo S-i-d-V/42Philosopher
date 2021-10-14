@@ -31,7 +31,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(FLAGS) -g $(OBJS) main.c -o $(NAME)
+	@$(CC) $(FLAGS) -g -fsanitize=thread $(OBJS) main.c -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled with success.$(CLEAR)"
 
 clean:
