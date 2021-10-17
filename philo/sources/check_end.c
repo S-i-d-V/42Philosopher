@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 20:37:00 by user42            #+#    #+#             */
-/*   Updated: 2021/10/17 16:20:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/17 20:44:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_eat(t_checker *checker)
 int	check_end(t_checker *checker)
 {
 	int	i;
-	int verif_eat;
+	int	verif_eat;
 
 	i = 0;
 	verif_eat = 0;

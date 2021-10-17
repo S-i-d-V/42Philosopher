@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 19:01:14 by user42            #+#    #+#             */
-/*   Updated: 2021/10/17 16:22:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/17 20:44:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void		*philo_day(void *data);
 void		philo_got_one_fork(t_philo *philo);
 void		*check_philo(void *data);
 
-int		check_end(t_checker *checker);
-int		check_eat(t_checker *checker);
+int			check_end(t_checker *checker);
+int			check_eat(t_checker *checker);
 
-int		exit_properly(t_checker *checker);
+int			exit_properly(t_checker *checker);
 
 #endif
