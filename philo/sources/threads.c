@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:57:48 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/14 12:40:03 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/17 16:19:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void	start_thread(t_checker *checker)
 		pthread_detach(checker->philo[i].thread);
 		i++;
 	}
-	while (1)
-	{
-		check_end(checker);
+	while (check_end(checker) == 0)
 		my_usleep(5);
-	}
 	exit_properly(checker);
 }

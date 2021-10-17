@@ -6,13 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:21:34 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/08 17:21:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/17 16:23:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosopher.h"
 
-void	exit_properly(t_checker *checker)
+int	exit_properly(t_checker *checker)
 {
 	int	i;
 
@@ -26,5 +26,6 @@ void	exit_properly(t_checker *checker)
 	pthread_mutex_destroy(&checker->die);
 	pthread_mutex_destroy(&checker->eat);
 	pthread_mutex_destroy(&checker->finish);
-	exit(0);
+	free(checker->philo);
+	return (1);
 }
