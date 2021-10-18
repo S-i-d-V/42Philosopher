@@ -3,28 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   write_action.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ugotheveny <ugotheveny@student.42.fr>      +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 16:50:35 by ugotheveny        #+#    #+#             */
-/*   Updated: 2021/10/14 12:11:30 by ugotheveny       ###   ########.fr       */
+/*   Updated: 2021/10/18 18:29:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosopher.h"
 
-void	write_action(t_philo *philo, char *msg)
+int	write_action(t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(philo->rules->write);
+	if (check_end_var(philo) == 1)
+	{
+		pthread_mutex_unlock(philo->rules->write);
+		return (1);
+	}
 	printf("%ld %d %s\n", ms_from_start(philo->rules->start), philo->num, msg);
 	pthread_mutex_unlock(philo->rules->write);
+	return (0);
 }
 
-void	philo_eat(t_philo *philo)
+int	philo_eat(t_philo *philo)
 {
 	philo_lock_first_fork(philo);
-	write_action(philo, "\033[1;34mhas taken a fork\033[00m");
+	if (write_action(philo, "\033[1;34mhas taken a fork\033[00m") == 1)
+	{
+		pthread_mutex_unlock(&philo->lfork);
+		return (1);
+	}
 	philo_lock_second_fork(philo);
-	write_action(philo, "\033[1;34mhas taken a fork\033[00m");
+	if (write_action(philo, "\033[1;34mhas taken a fork\033[00m") == 1)
+	{
+		pthread_mutex_unlock(philo->rfork);
+		return (1);
+	}
 	pthread_mutex_lock(philo->rules->eat);
 	philo->last_eat = ms_from_start(philo->rules->start);
 	pthread_mutex_unlock(philo->rules->eat);
@@ -35,6 +49,7 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(philo->rules->finish);
 	my_usleep(philo->rules->eat_timer);
 	philo_unlock_forks(philo);
+	return (0);
 }
 
 void	philo_sleep_think(t_philo *philo)
@@ -50,4 +65,5 @@ void	write_death(t_philo *philo)
 	printf("%ld %d \033[1;31mhas died\033[00m\n",
 		ms_from_start(philo->rules->start), philo->num);
 	my_usleep(25);
+	pthread_mutex_unlock(philo->rules->write);
 }
