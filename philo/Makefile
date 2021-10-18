@@ -6,7 +6,7 @@ GREEN =`tput setaf 2`
 CLEAR =`tput sgr0`
 
 #GENERAL
-CC = clang
+CC = gcc
 FLAGS = -Wall -Werror -Wextra -pthread
 CD = cd
 MV = mv
