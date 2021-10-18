@@ -31,7 +31,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) -g $(FLAGS) $(OBJS) main.c -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJS) main.c -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled with success.$(CLEAR)"
 
 clean:

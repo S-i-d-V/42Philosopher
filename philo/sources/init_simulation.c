@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:26:33 by user42            #+#    #+#             */
-/*   Updated: 2021/10/18 17:11:50 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/18 18:43:05 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_rules	teach_rules(t_rules *rules)
 	ret.eat_timer = rules->eat_timer;
 	ret.sleep_timer = rules->sleep_timer;
 	ret.nb_eat = rules->nb_eat;
-	ret.end_var = 0;
+	ret.end_var = rules->end_var;
 	return (ret);
 }
 
