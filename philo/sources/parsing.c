@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 18:57:29 by user42            #+#    #+#             */
-/*   Updated: 2021/10/18 18:41:44 by user42           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:24:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_rules	get_args(int ac, char **av)
 	else
 		rules.sleep_timer = -1;
 	rules.nb_eat = get_nb_eat(ac, av);
-	rules.start = get_actual_time();
 	rules.end_var = 0;
 	return (rules);
 }
@@ -70,5 +69,6 @@ int	check_args(int ac, t_rules rules)
 		if (rules.nb_eat == -1)
 			return (-6);
 	}
+	rules.start = get_actual_time();
 	return (0);
 }
