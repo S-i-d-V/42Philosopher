@@ -6,7 +6,7 @@ GREEN =`tput setaf 2`
 CLEAR =`tput sgr0`
 
 #GENERAL
-CC = clang
+CC = gcc
 FLAGS = -Wall -Werror -Wextra -pthread
 CD = cd
 MV = mv
@@ -31,7 +31,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) -g $(FLAGS) $(OBJS) main.c -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJS) main.c -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled with success.$(CLEAR)"
 
 clean:
